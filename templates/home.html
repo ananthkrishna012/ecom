@@ -1,0 +1,326 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>a</title>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #111;
+            color: #fff;
+        }
+
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+                url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        
+        .navbar {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo img {
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 500;
+            font-size: 17px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            font-weight: bold;
+        }
+
+        .auth-btn {
+            background: rgb(255, 255, 255);
+            color: black;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        
+
+        
+        .hero-text {
+            text-align: center;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-text h1 {
+            font-size: 80px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            background: white;
+            color: black;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.4s;
+            display: inline-block;
+        }
+
+       
+
+       
+        .products-section {
+            padding: 120px 40px;
+            background: #f5f5f5;
+            color: #111;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 80px;
+            color: #111;
+        }
+
+       
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            justify-items: center;
+        }
+
+        .item {
+            width: 100%;
+            max-width: 290px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(60, 10, 10, 0.505);
+            transition: all 0.4s ease;
+        }
+
+        /* .item:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        } */
+
+        .item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .item:hover img {
+            transform: scale(1.1);
+        }
+
+        .info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .info h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin: 10px 0;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .btn-cart {
+            background: #f1f1f1;
+            color: #111;
+            border: 2px solid #ddd;
+        }
+
+        .btn-cart:hover {
+            background: #000;
+            color: white;
+        }
+
+        .btn-buy {
+            background: #000;
+            color: white;
+        }
+
+        .btn-buy:hover {
+            background: #333;
+        }
+
+        
+        
+    </style>
+</head>
+
+<body>
+
+
+    <div class="hero">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{% url 'home2' %}">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike">
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="" class="active">Home</a>
+                <a href="{% url 'home2' %}#products">Products</a>
+            </div>
+            <div class="nav-right">
+                <a href="/login/" class="auth-btn">Login</a>
+            </div>
+        </nav>
+
+        <div class="hero-text">
+            <h1>JUST DO IT</h1>
+            <p>Discover the latest Nike sneakers built for performance and style</p>
+            <a href="/login/" class="hero-btn">Shop Now</a>
+        </div>
+    </div>
+
+    
+    <section class="products-section" id="products">
+
+        <div class="container">
+
+            {% if product1 %}
+            <div class="item">
+                <img src="{{ product1.image.url }}" alt="{{ product1.name }}">
+                <div class="info">
+                    <h3>{{ product1.name }}</h3>
+                    <div class="price">₹{{ product1.price }}</div>
+                    <div class="buttons">
+                        <a href="/login/" class="btn btn-cart">Add to Cart</a>
+                        <a href="/login/" class="btn btn-buy">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if product2 %}
+            <div class="item">
+                <img src="{{ product2.image.url }}" alt="{{ product2.name }}">
+                <div class="info">
+                    <h3>{{ product2.name }}</h3>
+                    <div class="price">₹{{ product2.price }}</div>
+                    <div class="buttons">
+                        <a href="{% url 'add_to_cart' product2.id %}" class="btn btn-cart">Add to Cart</a>
+                        <a href="{% url 'product_details' product2.id %}" class="btn btn-buy">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if product3 %}
+            <div class="item">
+                <img src="{{ product3.image.url }}" alt="{{ product3.name }}">
+                <div class="info">
+                    <h3>{{ product3.name }}</h3>
+                    <div class="price">₹{{ product3.price }}</div>
+                    <div class="buttons">
+                        <a href="{% url 'add_to_cart' product3.id %}" class="btn btn-cart">Add to Cart</a>
+                        <a href="{% url 'product_details' product3.id %}" class="btn btn-buy">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if product4 %}
+            <div class="item">
+                <img src="{{ product4.image.url }}" alt="{{ product4.name }}">
+                <div class="info">
+                    <h3>{{ product4.name }}</h3>
+                    <div class="price">₹{{ product4.price }}</div>
+                    <div class="buttons">
+                        <a href="{% url 'add_to_cart' product4.id %}" class="btn btn-cart">Add to Cart</a>
+                        <a href="{% url 'product_details' product4.id %}" class="btn btn-buy">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+</body>
+
+</html>

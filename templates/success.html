@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed • Nike Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* === FIXED BLACK NAVBAR === */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+
+        right: 0;
+            height: 70px;
+            background: #000;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .logo img {
+            height: 40px;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ff0000;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -8px;
+            left: 0;
+            background: #ff0000;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 22px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #ff0000;
+            color: white;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* === MAIN SUCCESS CONTENT === */
+        .main-content {
+            margin-top: 90px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: calc(100vh - 90px);
+            align-items: center;
+        }
+
+        .card {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            color: #111;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        .header {
+            background: #000;
+            color: white;
+            padding: 50px 20px;
+        }
+
+        .header i {
+            font-size: 70px;
+            color: #00ff00;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 17px;
+        }
+
+        .content {
+            padding: 45px 35px;
+        }
+
+        .product-preview {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 3px solid #eee;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 20px 0 10px;
+            color: #000;
+        }
+
+        .details {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 30px 0;
+            font-size: 16px;
+        }
+
+        .details p {
+            margin: 12px 0;
+            display: flex;
+            justify-content: space-between;
+            color: #333;
+        }
+
+        .details .total {
+            font-weight: bold;
+            font-size: 20px;
+            color: #000;
+            border-top: 2px dashed #ccc;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            margin: 12px 10px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 17px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #000;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #000;
+            border: 2px solid #000;
+        }
+
+        .btn-secondary:hover {
+            background: #000;
+            color: white;
+        }
+
+        .footer-note {
+            margin-top: 35px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        @media (max-width: 480px) {
+            .navbar { padding: 0 20px; }
+            .main-content { margin-top: 80px; }
+            .header h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fixed Black Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike">
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home2' %}">← Go Back </a>
+            
+        </div>
+    </div>
+
+    <!-- Success Card -->
+    <div class="main-content">
+        <div class="card">
+            <div class="header">
+                <!-- <i class="fas fa-check-circle"></i> -->
+                <h1>Order Confirmed!</h1>
+                <p>Thank you for shopping with us</p>
+            </div>
+
+            <div class="content">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-preview">
+                <div class="product-name">{{ product.name }}</div>
+
+                <div class="details">
+                    <p><span>Order Date</span> <span>{{ "now"|date:"d M Y" }}</span></p>
+                    <p><span>Quantity</span> <span>1 item</span></p>
+                    <p><span>Price</span> <span>₹{{ product.price }}</span></p>
+                    <p><span>Shipping</span> <span style="color:green;">FREE</span></p>
+                    <p class="total"><span>Total Paid</span> <span>₹{{ product.price }}</span></p>
+                </div>
+
+                <a href="{% url 'download_invoice' product.id %}" class="btn btn-primary">
+                    Download Invoice
+                </a>
+
+                <a href="{% url 'home2' %}" class="btn btn-secondary">
+                    Continue Shopping
+                </a>
+
+                <div class="footer-note">
+                    You will receive an order confirmation email shortly.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

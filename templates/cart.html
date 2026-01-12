@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Nike Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #111;
+            min-height: 100vh;
+        }
+
+      
+        .navbar {
+            background: #111;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+       
+        .container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+
+      
+        .cart-items {
+            
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid #eee;
+            transition: 0.3s;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item:hover {
+            background: #f9f9f9;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-right: 25px;
+        }
+
+        .item-details h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        .item-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            margin: 8px 0;
+        }
+
+        .item-qty {
+            color: #555;
+            font-size: 15px;
+        }
+
+        .item-total {
+            margin-left: auto;
+            font-size: 22px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .remove-btn {
+            margin-left: 30px;
+            background: transparent;
+            border: 2px solid #ddd;
+            color: #999;
+            padding: 10px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+       
+
+        
+        .total-section {
+           
+            color: rgb(0, 0, 0);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: right;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        
+        .empty-cart {
+            text-align: center;
+            padding: 100px 20px;
+            color: #777;
+        }
+
+        .empty-cart i {
+            font-size: 90px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h2 {
+            font-size: 28px;
+            margin: 20px 0;
+            color: #555;
+        }
+
+        .empty-cart a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 40px;
+            background: #000;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .empty-cart a:hover {
+            background: #333;
+            transform: scale(1.05);
+        }
+
+        .buy-now-btn {
+            display: inline-block;
+            background: white;
+            color: #000;
+            padding: 16px 50px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 25px;
+            margin-left: 850px;
+        }
+
+        .buy-now-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        
+    </style>
+</head>
+
+<body>
+
+    
+    <nav class="navbar">
+        <a href="{% url 'home2' %}" class="back-link">
+            ← Continue Shopping
+        </a>
+        <div class="logo">
+            <a href="{% url 'home2' %}">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike">
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">YOUR CART</h1>
+
+        {% if cart_items %}
+        <div class="cart-items">
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="item-image">
+                <div class="item-details">
+                    <h3>{{ item.product.name }}</h3>
+                    <!-- <div class="item-qty">Quantity: {{ item.qty }}</div> -->
+                    <div class="item-price">₹{{ item.product.price }} </div>
+                </div>
+                <div class="item-total">₹{{ item.amount }}</div>
+                <a href="{% url 'remove_from_cart' item.product.id %}" class="remove-btn"
+                    onclick="return confirm('Remove this item from cart?')">
+                    Remove
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="total-section">
+            Total: ₹{{ total }}
+        </div>
+        <div class="">
+            <a href="" class="buy-now-btn">PAY NOW </a>
+
+        </div>
+        
+
+        {% else %}
+        <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added anything yet.</p>
+            <a href="{% url 'home2' %}">Start Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+    <!-- <div class="total-section">
+        Grand Total: ₹{{ total }}
+        <div style="text-align: center;">
+            <a href="" class="buy-now-btn">BUY NOW</a>
+        </div>
+    </div> -->
+
+</body>
+
+</html>

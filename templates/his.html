@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History - Nike Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+       
+        .navbar {
+            background: #111;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .logo img { height: 50px; filter: brightness(0) invert(1); }
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .navbar-right a:hover { opacity: 0.8; }
+
+        
+        .page-header {
+            text-align: center;
+            padding: 80px 20px 50px;
+        }
+        .page-title {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 19px;
+            color: #ffffff;
+        }
+
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto 120px;
+            padding: 0 20px;
+        }
+
+        
+        .order-item {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .order-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .order-img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .order-details {
+            flex: 1;
+        }
+        .order-details h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #111;
+        }
+        .order-price {
+            font-size: 26px;
+            font-weight: 900;
+            color: #000;
+            margin: 8px 0;
+        }
+        .order-date {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .order-status {
+            margin-left: auto;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-delivered   { background: #e8f5e8; color: #2e7d32; }
+        .status-processing  { background: #fff3e0; color: #ef6c00; }
+        .status-shipped     { background: #e3f2fd; color: #1063c2; }
+        .status-cancelled   { background: #ffebee; color: #c62828; }
+
+        
+        .empty-history {
+            text-align: center;
+            padding: 140px 20px;
+            color: #777;
+        }
+        .empty-history i {
+            font-size: 110px;
+            color: #ddd;
+            margin-bottom: 25px;
+        }
+        .empty-history h2 {
+            font-size: 34px;
+            margin: 20px 0;
+            color: #555;
+        }
+        .empty-history p { font-size: 18px; margin-bottom: 30px; }
+        .empty-history a {
+            display: inline-block;
+            padding: 16px 50px;
+            background: #000;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .empty-history a:hover {
+            background: #333;
+            transform: scale(1.05);
+        }
+
+       
+        .nike-logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+        }
+        .nike-logo img {
+            height: 50px;
+            filter: brightness(0) invert(1);
+            transition: 0.3s;
+        }
+       
+
+       
+        .back-link {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            opacity: 0.9;
+            transition: 0.3s;
+        }
+        
+        .back-link i { margin-right: 8px; }
+    </style>
+</head>
+<body>
+
+  <div class="nike-logo">
+        
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike">
+        </a>
+    </div>
+
+   
+    <a href="{% url 'home2' %}" class="back-link">
+        Go Back Home
+    </a>
+
+    
+    <div class="page-header">
+        <h1 class="page-title">ORDER HISTORY</h1>
+        
+    </div>
+
+    <div class="container">
+
+        {% if data %}
+            {% for i in data %}
+            <div class="order-item">
+                <img src="{{ i.product.image.url }}" alt="{{ i.product.name }}" class="order-img">
+
+                <div class="order-details">
+                    <h3>{{ i.product.name }}</h3>
+                    <div class="order-price">₹{{ i.product.price }}</div>
+                    <!-- <div class="order-date">
+                        Ordered on: {{ i.ordered_date|date:"d M Y, h:i A" }}
+                    </div> -->
+                </div>
+
+                Change class based on actual status
+                 <div class="order-status status-delivered">Order Placed</div> 
+            </div>
+            {% endfor %}
+
+        {% else %}
+            <div class="empty-history">
+                <i class="fas fa-receipt"></i>
+                <h2>No Orders Found</h2>
+                <p>You haven't placed any orders yet.</p>
+                <a href="{% url 'home2' %}">Start Shopping Now</a>
+
+            </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
